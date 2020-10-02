@@ -1,4 +1,12 @@
-let P = document.getElementById("player")
+const Pumpkin = document.querySelector("#player")
+const finishline = document.querySelector("#finish")
+
+let x = 350
+let y = 419
+let yPos = 9
+let xPos = 0
+
+
 const map = [
   "WWWWWWWWWWWWWWWWWWWWW",
   "W   W     W     W W W",
@@ -18,12 +26,12 @@ const map = [
 ]
 
 function mazeboard() {
-  let maze = document.getElementById("maze")
+  let maze = document.querySelector("#maze")
   for (let column = 0; column < map.length; column++) {
     let columnBox = map[column]
     let columnDiv = document.createElement("div")
     columnDiv.classList.add("column")
-    columnDiv.dataset.column = column
+    columnDiv.dataset.yColumn = column
     maze.appendChild(columnDiv)
     for (let row = 0; row < columnBox.length; row++) {
       let rowBox = columnBox[row]
@@ -39,14 +47,37 @@ function mazeboard() {
           break
         case "S":
           rowDiv.classList.add("starts")
-          rowDiv.appendChild(P)
+          rowDiv.appendChild(Pumpkin)
           break
         case "F":
-          rowDiv.classList.add("finish")
+          rowDiv.classList.add("finish")  
           break
       }
       columnDiv.appendChild(rowDiv)
     }
   }
 }
+
+function PlayerPosition(e) {
+  console.log(e.key)
+  if (e.key === "ArrowLeft" && map[yPos][xPos - 1] !== "W") {
+    x -= 30
+    xPos -= 1
+    Pumpkin.style.left = x + "px"
+  } else if (e.key === "ArrowRight" && map[yPos][xPos + 1] !== "W") {
+    x += 30
+    xPos += 1
+    Pumpkin.style.left = x + "px"
+  } else if (e.key === "ArrowUp" && map[yPos - 1][xPos] !== "W") {
+    y -= 30
+    yPos -= 1
+    Pumpkin.style.top = y + "px"
+  } else if (e.key === "ArrowDown" && map[yPos+1][xPos] !== "W") {
+    y += 30
+    yPos += 1
+    Pumpkin.style.top = y + "px"
+  }
+}
+document.addEventListener("keydown", PlayerPosition)
+
 mazeboard()
