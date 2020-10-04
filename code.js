@@ -1,11 +1,11 @@
 const Pumpkin = document.querySelector("#player")
-const finishline = document.querySelector("#finish")
 
 let x = 350
 let y = 419
 let yPos = 9
 let xPos = 0
-
+let FyPos = 8
+let FxPos = 20
 
 const map = [
   "WWWWWWWWWWWWWWWWWWWWW",
@@ -50,16 +50,19 @@ function mazeboard() {
           rowDiv.appendChild(Pumpkin)
           break
         case "F":
-          rowDiv.classList.add("finish")  
+          rowDiv.classList.add("finish")
           break
       }
       columnDiv.appendChild(rowDiv)
     }
   }
 }
-
+function checkWinner() {
+  if (xPos === FxPos && yPos === FyPos) {
+    document.body.innerHTML = "Congratulation You Win!"
+  }
+}
 function PlayerPosition(e) {
-  console.log(e.key)
   if (e.key === "ArrowLeft" && map[yPos][xPos - 1] !== "W") {
     x -= 30
     xPos -= 1
@@ -72,11 +75,12 @@ function PlayerPosition(e) {
     y -= 30
     yPos -= 1
     Pumpkin.style.top = y + "px"
-  } else if (e.key === "ArrowDown" && map[yPos+1][xPos] !== "W") {
+  } else if (e.key === "ArrowDown" && map[yPos + 1][xPos] !== "W") {
     y += 30
     yPos += 1
     Pumpkin.style.top = y + "px"
   }
+  checkWinner()
 }
 document.addEventListener("keydown", PlayerPosition)
 
