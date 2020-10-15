@@ -1,4 +1,5 @@
 const Pumpkin = document.querySelector("#player")
+const message = document.querySelector("#message")
 
 let x = 350
 let y = 419
